@@ -1,11 +1,15 @@
 -- ===========================================================================
--- 05_manual_fixes.sql -- run AFTER 04_mint_local_codes.sql
+-- 05_manual_fixes.sql -- HISTORY, NOT THE RESTORE PATH.
 --
--- Corrections found by validation after the automated steps. Each one traces to
--- Census county-subdivision data or to a duplicate in the DOT source.
+-- Corrections found by validation after the automated steps. Each traces to Census
+-- county-subdivision data or to a duplicate in the DOT source.
 --
--- WITHOUT THIS FILE the rebuild is incomplete: 01 truncates lu_place, so every
--- fix below has to be re-applied.
+-- To RESTORE lu_place, use 06_lu_place_snapshot.sql -- it already contains every
+-- fix below. This file exists to explain WHY each code is what it is.
+--
+-- The final validation query needs dwh.lu_census_dual, which was scaffolding and has
+-- been dropped. Rebuild it from the Census Gazetteer county-subdivisions file if you
+-- need to re-run that check.
 -- ===========================================================================
 
 
@@ -191,7 +195,8 @@ GROUP BY 1 HAVING COUNT(DISTINCT stateabbr || '|' || citynamenorm) > 1
    AND citycode NOT IN ('L9001','L9002');
 
 -- township split where Census does NOT confirm both exist
--- (needs load_lu_census_dual.sql; note the MOUNT/MT fold on both sides)
+-- (needs dwh.lu_census_dual, since dropped -- rebuild from the Census Gazetteer
+--  county-subdivisions file; note the MOUNT/MT fold on both sides)
 SELECT p.stateabbr, p.cityname, p.citycode
 FROM dwh.lu_place p
 LEFT JOIN dwh.lu_census_dual d

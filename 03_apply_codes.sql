@@ -1,8 +1,9 @@
 -- ===========================================================================
--- 03_apply_codes.sql -- fill citycodes in dwh.lu_place. Run AFTER 01 and 02.
+-- 03_apply_codes.sql -- HISTORY, NOT THE RESTORE PATH.
 --
--- 01_load_lu_place.sql starts with TRUNCATE, so running it alone wipes every
--- code filled in below. Always run 01 -> 02 -> 03 as a sequence.
+-- How citycodes were originally filled in. To RESTORE lu_place use
+-- 06_lu_place_snapshot.sql, which already contains all of this plus every later
+-- correction. This file exists to explain WHY each code is what it is.
 --
 -- Every step records how it assigned the code in `notes`, so each is separately
 -- reversible and auditable. No code is ever invented: they all come from the
