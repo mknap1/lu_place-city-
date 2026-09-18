@@ -15,7 +15,10 @@
 -- Prefixes:       none = DOT, T = township split off a DOT code,
 --                 L = minted for a place in neither source
 -- Coded rows:     6270 of 6655
--- Dropdown:       5176 distinct places, 5798 distinct labels
+-- Dropdown:       5176 distinct places, one label each, no collisions.
+--                 Row-level citydisplayname names the row's own county, so a
+--                 place spanning two counties carries two spellings. The
+--                 dropdown takes one per (stateabbr, citycode).
 
 TRUNCATE dwh.lu_place;
 
